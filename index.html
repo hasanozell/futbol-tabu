@@ -1,0 +1,112 @@
+<!doctype html>
+<html lang="tr">
+<head>
+  <meta charset="utf-8" />
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1, user-scalable=no, viewport-fit=cover"
+  />
+  <title>Futbol Tabu — Futbolcular</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="container">
+
+    <!-- KURULUM EKRANI -->
+    <section id="setupScreen" class="card setup">
+      <h1 class="title">Futbol Tabu</h1>
+      <p class="muted">Önce takım adlarını ve ayarları gir, sonra <b>Oyunu Başlat</b>.</p>
+
+      <div class="setup-grid">
+        <label>Takım A Adı
+          <input id="teamAInput" type="text" placeholder="Örn. Kanaryalar" maxlength="24" autocomplete="off" autocapitalize="words">
+        </label>
+        <label>Takım B Adı
+          <input id="teamBInput" type="text" placeholder="Örn. Aslanlar" maxlength="24" autocomplete="off" autocapitalize="words">
+        </label>
+
+        <label>Tur Süresi (sn)
+          <input id="optDuration" type="number" min="15" max="180" step="5" value="60" inputmode="numeric">
+        </label>
+        <label>Doğru Puanı
+          <input id="optRight" type="number" min="-5" max="5" step="1" value="1" inputmode="numeric">
+        </label>
+        <label>Tabu Cezası
+          <input id="optTaboo" type="number" min="-10" max="0" step="1" value="-1" inputmode="numeric">
+        </label>
+        <label>Pas Cezası
+          <input id="optPass" type="number" min="-5" max="0" step="1" value="-1" inputmode="numeric">
+        </label>
+        <label>Hedef Puan
+          <input id="optGoal" type="number" min="5" max="50" step="1" value="10" inputmode="numeric">
+        </label>
+      </div>
+
+      <div class="setup-actions">
+        <button id="startGame" class="accent">🎮 Oyunu Başlat</button>
+        <button id="clearLS" class="ghost">Kaydı Temizle</button>
+      </div>
+
+      <p class="muted small">
+        Kısayollar: <span class="kbd">Space</span> başlat/duraklat ·
+        <span class="kbd">D</span> doğru · <span class="kbd">T</span> tabu ·
+        <span class="kbd">P</span> pas
+      </p>
+    </section>
+
+    <!-- OYUN EKRANI -->
+    <section id="gameScreen" class="card game hidden" aria-live="polite">
+      <header class="game-header">
+        <div class="gh-col">
+          <div class="pill">Süre: <b class="time" id="time">01:00</b></div>
+        </div>
+        <div class="gh-col center">
+          <div class="pill">Sıra: <b id="turnLabel">A</b></div>
+        </div>
+        <div class="gh-col right">
+          <div class="pill">Hedef: <b id="goalLabel">10</b></div>
+        </div>
+      </header>
+
+      <div class="card-face">
+        <div class="word" id="word">—</div>
+        <div class="tabu-list" id="tabus"></div>
+        <div class="btn-row">
+          <button id="btnTaboo" class="btn-wide danger" aria-label="Tabu"><b>Tabu</b> <span class="kbd">T</span></button>
+          <button id="btnPass" class="btn-wide warn" aria-label="Pas"><b>Pas</b> <span class="kbd">P</span></button>
+          <button id="btnCorrect" class="btn-wide ok" aria-label="Doğru"><b>Doğru</b> <span class="kbd">D</span></button>
+        </div>
+      </div>
+
+      <div class="game-actions">
+        <button id="btnStart" class="accent">⏱️ Başlat (Space)</button>
+        <button id="btnPause" class="ghost" disabled>Duraklat</button>
+        <!-- Yeni Kart kaldırıldı -->
+        <button id="btnReset" class="ghost">Sıfırla</button>
+      </div>
+
+      <footer class="game-footer">
+        <div class="score-mini">
+          <div class="box"><span id="teamAName">Takım A</span><b id="scoreA">0</b></div>
+          <div class="box"><span id="teamBName">Takım B</span><b id="scoreB">0</b></div>
+        </div>
+      </footer>
+    </section>
+
+    <!-- TUR ÖZETİ / OVERLAY -->
+    <div id="overlay" class="overlay hidden" role="dialog" aria-modal="true" aria-labelledby="ovTitle">
+      <div class="overlay-card">
+        <h3 id="ovTitle">Tur Bitti</h3>
+        <p class="muted">Süre doldu. Puan güncellendi ve sıra diğer takıma geçti.</p>
+        <div class="overlay-scores">
+          <div><span id="ovTeamA">Takım A</span> <b id="ovScoreA">0</b></div>
+          <div><span id="ovTeamB">Takım B</span> <b id="ovScoreB">0</b></div>
+        </div>
+        <button id="nextTurn" class="accent">Tamam</button>
+      </div>
+    </div>
+
+  </div>
+  <script src="app.js"></script>
+</body>
+</html>
